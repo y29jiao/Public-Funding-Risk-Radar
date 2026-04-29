@@ -1,0 +1,14 @@
+pandas
+numpy
+sqlalchemy
+psycopg2-binary
+python-dotenv
+rapidfuzz
+pydantic
+requests
+tqdm
+tabulate
+streamlit
+altair<5
+plotly
+openai
