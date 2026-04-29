@@ -27,6 +27,24 @@ Most public funding review workflows struggle with three problems:
 
 This project addresses those problems by combining a fixed golden entity layer, risk scoring, LLM entity disambiguation, LLM adverse-media classification, and generated analyst workflows.
 
+## AI Agent Process Improvement
+
+The project is framed as an AI agent workflow that reduces red tape in public funding review. Instead of asking analysts to move through a rigid sequence of disconnected searches, spreadsheets, hand-written notes, and delayed approvals, the system assembles the first review package automatically and keeps the human analyst in control of final judgment.
+
+| Existing bureaucratic process | AI agent workflow | Improvement |
+| --- | --- | --- |
+| Analysts manually search charity, grant, contract, registry, and media sources one by one. | The agent unifies public funding, CRA filing, Alberta grant/contract, vendor concentration, and media-review signals into one queue. | Reduces repeated lookups and handoff delay. |
+| Review starts only after raw records are gathered into a complete case file. | The agent triages entities dynamically by risk score and evidence availability. | Reviewers can focus first on the highest-signal cases. |
+| Name variants and unrelated media hits create false-positive cleanup work. | The agent uses entity disambiguation to separate same-entity, possible-match, and false-positive results. | Analysts spend more time judging relevant evidence. |
+| Analysts manually draft summaries, evidence gaps, and next steps from raw tables. | The agent generates review-safe rationales and recommended investigation workflows. | Case preparation is faster and more consistent. |
+
+The human-in-the-loop design is intentional:
+
+- The AI agent prepares a prioritized review package.
+- The analyst confirms registry status, filing history, funding dates, and media relevance.
+- The analyst decides whether escalation, documentation, or no further action is appropriate.
+- The system avoids legal conclusions and uses screening language only.
+
 ## Demo UI
 
 The Streamlit UI is designed for reviewers who only open the webpage. They do not need to run scripts.
@@ -36,6 +54,7 @@ Main pages:
 - `Welcome` explains the project and how to read the dashboard.
 - `Executive Summary` shows output coverage, risk distribution, and review-ready highlights.
 - `Review Queue` shows prioritized entities for analyst review.
+- `AI Agent Workflow` shows how the system replaces red-tape review steps with a dynamic human-in-the-loop workflow.
 - `AI Analyst Reports` shows generated rationale, next steps, and adverse-media summaries.
 - `Evidence Tables` groups detailed zombie, concentration, entity-match, media, and quality-report outputs.
 - `Ask the Risk Radar` provides lightweight Q&A grounded in generated CSV outputs.

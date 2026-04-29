@@ -29,6 +29,7 @@ def main() -> None:
             "Welcome",
             "Executive Summary",
             "Review Queue",
+            "AI Agent Workflow",
             "AI Analyst Reports",
             "Evidence Tables",
             "Ask the Risk Radar",
@@ -48,6 +49,8 @@ def main() -> None:
         executive_summary_page()
     elif page == "Review Queue":
         review_queue_page()
+    elif page == "AI Agent Workflow":
+        ai_agent_workflow_page()
     elif page == "AI Analyst Reports":
         ai_reports_page()
     elif page == "Evidence Tables":
@@ -67,19 +70,23 @@ def welcome_page() -> None:
         "The system is designed to support triage, not to make legal conclusions. "
         "All flags are review signals and do not establish wrongdoing."
     )
+    st.caption(
+        "For process design: see the **AI Agent Workflow** page for a concise view of red-tape reduction and human-in-the-loop review."
+    )
 
     st.subheader("How To Use")
     st.markdown("1. Open **Executive Summary** to see current output coverage and risk distribution.")
     st.markdown("2. Open **Review Queue** to inspect top-priority entities.")
-    st.markdown("3. Open **AI Analyst Reports** for generated rationale and investigation plans.")
-    st.markdown("4. Open **Evidence Tables** for detailed zombie, concentration, entity-match, and media evidence.")
-    st.markdown("5. Use **Ask the Risk Radar** for guided Q&A grounded in generated outputs.")
+    st.markdown("3. Open **AI Agent Workflow** to see how the system reduces red tape.")
+    st.markdown("4. Open **AI Analyst Reports** for generated rationale and investigation plans.")
+    st.markdown("5. Open **Evidence Tables** for detailed zombie, concentration, entity-match, and media evidence.")
+    st.markdown("6. Use **Ask the Risk Radar** for guided Q&A grounded in generated outputs.")
 
     st.subheader("Reading Flow")
     st.write(
         "For reviewers, this dashboard is intended to be used directly without running commands. "
-        "Start from Executive Summary, then Review Queue, then AI Analyst Reports, and use "
-        "Evidence Tables only when you need source-level details."
+        "Start from Executive Summary, then Review Queue, then AI Agent Workflow, then AI Analyst Reports, "
+        "and use Evidence Tables only when you need source-level details."
     )
 
 
@@ -150,6 +157,50 @@ def review_queue_page() -> None:
     st.markdown("### Recommended Investigation Workflows")
     _show_plans(plans)
 
+
+def ai_agent_workflow_page() -> None:
+    st.subheader("AI Agent Workflow")
+    st.caption(
+        "The goal is to replace a rigid, document-heavy review path with a dynamic AI-assisted workflow "
+        "where analysts keep final judgment."
+    )
+
+    st.markdown("### Red-Tape Process Replaced")
+    st.table(pd.DataFrame([
+        {
+            "Existing bureaucratic step": "Analyst manually searches separate charity, grant, contract, and media sources.",
+            "AI agent workflow": "Entity, funding, filing, vendor, and media signals are assembled into one review queue.",
+            "Improvement": "Less handoff friction and fewer repeated lookups.",
+        },
+        {
+            "Existing bureaucratic step": "Teams wait for full case files before deciding what deserves attention.",
+            "AI agent workflow": "Risk scoring prioritizes the highest-signal entities first, then opens evidence only when needed.",
+            "Improvement": "Earlier triage with a clearer review order.",
+        },
+        {
+            "Existing bureaucratic step": "Name variants and unrelated search results create slow false-positive cleanup.",
+            "AI agent workflow": "LLM entity disambiguation labels same-entity, possible-match, and false-positive media results.",
+            "Improvement": "Analysts spend more time judging relevant evidence.",
+        },
+        {
+            "Existing bureaucratic step": "Narratives and next steps are written manually from raw tables.",
+            "AI agent workflow": "AI generates review-safe rationales, evidence gaps, and recommended investigation plans.",
+            "Improvement": "Faster, more consistent case preparation.",
+        },
+    ]))
+
+    st.markdown("### Dynamic Human-in-the-Loop Review")
+    st.write(
+        "The agent does not approve, deny, accuse, or make legal conclusions. It prepares a prioritized, "
+        "explainable review package so a human analyst can confirm source records, weigh context, and decide "
+        "whether escalation is justified."
+    )
+    st.table(pd.DataFrame([
+        {"Stage": "1. Monitor", "Agent help": "Refresh structured outputs from public funding, filing, and vendor data.", "Human judgment": "Set policy thresholds and review priorities."},
+        {"Stage": "2. Triage", "Agent help": "Rank entities by zombie, concentration, and adverse-media signals.", "Human judgment": "Choose which cases need attention now."},
+        {"Stage": "3. Verify", "Agent help": "Filter likely media false positives and identify missing evidence.", "Human judgment": "Confirm registry records, funding dates, and source relevance."},
+        {"Stage": "4. Explain", "Agent help": "Draft cautious summaries and investigation workflows.", "Human judgment": "Edit wording, add context, and decide next action."},
+    ]))
 
 def ai_reports_page() -> None:
     explanations = load_csv("entity_review_explanations.csv")
